@@ -5,6 +5,8 @@ import nextstep.users.domain.NsUserTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,7 +16,7 @@ public class AnswerTest {
 
     @DisplayName("삭제 권한 없음")
     @Test
-    void 삭제_권한x(){
+    void 삭제_권한x() {
         assertThatThrownBy(() -> {
             A1.validateDeleteQuestionAnswer(NsUserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
@@ -22,8 +24,8 @@ public class AnswerTest {
 
     @DisplayName("질문 삭제")
     @Test
-    void 질문_삭제(){
-        A1.deleteAnswer();
+    void 질문_삭제() {
+        A1.deleteAnswer(LocalDateTime.now());
         assertThat(A1.isDeleted()).isTrue();
     }
 

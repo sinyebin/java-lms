@@ -10,11 +10,15 @@ public class DeleteHistories {
         this.deleteHistories = new ArrayList<>();
     }
 
-    public void addDeleteHistory(DeleteHistory deleteHistory){
+    public void addDeleteHistory(DeleteHistory deleteHistory) {
         deleteHistories.add(deleteHistory);
     }
 
-    public List<DeleteHistory> getDeleteHistories(){
+    public void addAll(DeleteHistories otherDeleteHistories) {
+        this.deleteHistories.addAll(otherDeleteHistories.getDeleteHistories());
+    }
+
+    public List<DeleteHistory> getDeleteHistories() {
         return deleteHistories;
     }
 }

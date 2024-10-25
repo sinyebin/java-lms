@@ -6,6 +6,7 @@ import nextstep.users.domain.NsUserTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static nextstep.qna.domain.AnswerTest.A1;
@@ -38,9 +39,8 @@ class AnswersTest {
     @Test
     void 답변_전체_삭제() {
         Answers answers = new Answers(List.of(A1, A1));
-        DeleteHistories deleteHistories = new DeleteHistories();
-
-        answers.deleteQuestionAllAnswers(deleteHistories);
+        LocalDateTime deleteTime = LocalDateTime.now();
+        answers.deleteQuestionAllAnswers(deleteTime);
         assertAll(
                 () -> assertThat(answers.getAnswers().get(0).isDeleted()).isTrue(),
                 () -> assertThat(answers.getAnswers().get(1).isDeleted()).isTrue()

@@ -7,6 +7,8 @@ import nextstep.users.domain.NsUser;
 
 import java.time.LocalDateTime;
 
+import static nextstep.qna.domain.DeleteHistory.deleteFromAnswer;
+
 public class Answer {
     private Long id;
 
@@ -31,11 +33,11 @@ public class Answer {
 
     public Answer(Long id, NsUser writer, Question question, String contents) {
         this.id = id;
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -70,9 +72,9 @@ public class Answer {
         }
     }
 
-    public DeleteHistory deleteAnswer(){
-        this.deleted=true;
-        return new DeleteHistory(this, LocalDateTime.now());
+    public DeleteHistory deleteAnswer(LocalDateTime deleteTime) {
+        this.deleted = true;
+        return deleteFromAnswer(this.id, this.writer, deleteTime);
     }
 
     @Override
