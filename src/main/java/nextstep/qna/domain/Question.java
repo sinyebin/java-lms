@@ -5,8 +5,6 @@ import nextstep.users.domain.NsUser;
 
 import java.time.LocalDateTime;
 
-import static nextstep.qna.domain.DeleteHistory.deleteFromQuestion;
-
 public class Question {
     private Long id;
 
@@ -74,10 +72,10 @@ public class Question {
         DeleteHistories deleteHistories = new DeleteHistories();
         this.deleted = true;
 
-        deleteHistories.addDeleteHistory(deleteFromQuestion(this.id, this.writer, deleteTime));
+        deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, id, writer, deleteTime));
         DeleteHistories answerDeleteHistories = answers.deleteQuestionAllAnswers(deleteTime);
         deleteHistories.addAll(answerDeleteHistories);
-        
+
         return deleteHistories;
     }
 
