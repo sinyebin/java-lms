@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
+import static nextstep.users.domain.NsUserTest.JAVAJIGI;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class SessionTest {
@@ -33,5 +35,15 @@ class SessionTest {
                 LocalDateTime.of(2024, 11, 28, 0, 0));
         session.closeSession();
         assertThat(session.getSessionStatus()).isEqualTo(SessionStatus.CLOSED);
+    }
+    
+    @DisplayName("세션 오픈이 안되어서 수강생 등록 실패")
+    @Test
+    void 수강생_등록_에러() {
+        Session session = new Session("세션", LocalDateTime.of(2024, 10, 28, 0, 0),
+                LocalDateTime.of(2024, 11, 28, 0, 0));
+        assertThatThrownBy(() -> {
+            session.register(JAVAJIGI);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 }
