@@ -11,7 +11,7 @@ class SessionImgTest {
     @Test
     void 이미지_사이즈_검증() {
         assertThatThrownBy(() -> {
-            new SessionImg(1025, 600, 400);
+            new SessionImg(1025, 600, 400, "jpg");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -20,11 +20,19 @@ class SessionImgTest {
     void 이미지_비율_검증() {
         assertAll(
                 () -> assertThatThrownBy(() -> {
-                    new SessionImg(1025, 150, 100);
+                    new SessionImg(1025, 150, 100, "jpg");
                 }).isInstanceOf(IllegalArgumentException.class),
                 () -> assertThatThrownBy(() -> {
-                    new SessionImg(1025, 600, 500);
+                    new SessionImg(1025, 600, 500, "jpg");
                 }).isInstanceOf(IllegalArgumentException.class)
         );
+    }
+
+    @DisplayName("이미지 타입은 gif, jpg(jpeg), png, svg만 허용된다.")
+    @Test
+    void 이미지_타입_검증() {
+        assertThatThrownBy(() -> {
+            new SessionImg(1025, 600, 400, "jpgs");
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 }
