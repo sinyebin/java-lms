@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static nextstep.users.domain.NsUserTest.JAVAJIGI;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -43,7 +44,7 @@ class SessionTest {
         Session session = new FreeSession("세션", LocalDateTime.of(2024, 10, 28, 0, 0),
                 LocalDateTime.of(2024, 11, 28, 0, 0));
         assertThatThrownBy(() -> {
-            session.register(JAVAJIGI);
+            session.register(JAVAJIGI, Optional.empty());
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

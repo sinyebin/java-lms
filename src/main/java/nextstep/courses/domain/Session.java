@@ -1,8 +1,10 @@
 package nextstep.courses.domain;
 
+import nextstep.payments.domain.Payment;
 import nextstep.users.domain.NsUser;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public abstract class Session {
     private final String CAN_NOT_REGISTER_SESSION = "수강신청 모집중이 아닙니다.";
@@ -48,11 +50,25 @@ public abstract class Session {
         return this.sessionStatus;
     }
 
-    public void register(NsUser student) {
+    public void register(NsUser student, Optional<Payment> payment) {
         if (this.sessionStatus != SessionStatus.OPEN) {
             throw new IllegalArgumentException(CAN_NOT_REGISTER_SESSION);
         }
+
+        if (requiresPayment()) {
+            Payment actualPayment = payment.orElseThrow(() -> new IllegalArgumentException("유료 세션에서는 결제가 필요합니다."));
+            actualPayment.validateForSessionAndUser(id, student.getId(), getFee());
+        }
         students.addStudent(student);
     }
-    
+
+    protected abstract boolean requiresPayment();
+
+    protected Long getFee() {
+        return null;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

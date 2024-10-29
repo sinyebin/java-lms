@@ -1,9 +1,11 @@
 package nextstep.courses.domain;
 
+import nextstep.payments.domain.Payment;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static nextstep.users.domain.NsUserTest.JAVAJIGI;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -13,9 +15,19 @@ class PaidSessionTest {
     @Test
     void 최대_수강인원_초과_에러() {
         Session session = new PaidSession("세션", LocalDateTime.of(2024, 10, 28, 0, 0),
-                LocalDateTime.of(2024, 11, 28, 0, 0), SessionStatus.OPEN, 0);
+                LocalDateTime.of(2024, 11, 28, 0, 0), SessionStatus.OPEN, 0, 10000L);
         assertThatThrownBy(() -> {
-            session.register(JAVAJIGI);
+            session.register(JAVAJIGI, Optional.of(new Payment(session.getId(), JAVAJIGI.getId(), 10000L)));
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("유료 강의는 수강생이 결제한 금액과 수강료가 일치할 때 수강 신청이 가능하다.")
+    @Test
+    void 강의_금액_에러() {
+        Session session = new PaidSession("세션", LocalDateTime.of(2024, 10, 28, 0, 0),
+                LocalDateTime.of(2024, 11, 28, 0, 0), SessionStatus.OPEN, 0, 10000L);
+        assertThatThrownBy(() -> {
+            session.register(JAVAJIGI, Optional.of(new Payment(session.getId(), JAVAJIGI.getId(), 20000L)));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

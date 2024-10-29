@@ -15,5 +15,8 @@ public class FreeSession extends Session {
         super(id, title, startDay, endDay, sessionStatus, students);
     }
 
-
+    @Override
+    protected boolean requiresPayment() {
+        return false;
+    }
 }
