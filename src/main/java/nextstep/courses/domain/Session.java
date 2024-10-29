@@ -38,4 +38,6 @@ public class Session {
     public SessionStatus getSessionStatus() {
         return this.sessionStatus;
     }
+
+    
 }
