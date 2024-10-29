@@ -4,7 +4,7 @@ import nextstep.users.domain.NsUser;
 
 import java.time.LocalDateTime;
 
-public class Session {
+public abstract class Session {
     private final String CAN_NOT_REGISTER_SESSION = "수강신청 모집중이 아닙니다.";
     private final Long id;
     private final String title;
@@ -54,4 +54,5 @@ public class Session {
         }
         students.addStudent(student);
     }
+    
 }
