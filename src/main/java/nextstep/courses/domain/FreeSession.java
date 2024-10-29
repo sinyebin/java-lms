@@ -1,6 +1,7 @@
 package nextstep.courses.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class FreeSession extends Session {
     public FreeSession(String title, LocalDateTime startDay, LocalDateTime endDay) {
@@ -18,5 +19,15 @@ public class FreeSession extends Session {
     @Override
     protected boolean requiresPayment() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode());
     }
 }

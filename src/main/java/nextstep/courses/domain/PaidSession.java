@@ -1,6 +1,7 @@
 package nextstep.courses.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class PaidSession extends Session {
     private final Long fee;
@@ -30,5 +31,15 @@ public class PaidSession extends Session {
     @Override
     protected Long getFee() {
         return fee;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode());
     }
 }
