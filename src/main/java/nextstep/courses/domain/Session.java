@@ -3,9 +3,8 @@ package nextstep.courses.domain;
 import nextstep.payments.domain.Payment;
 import nextstep.users.domain.NsUser;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Optional;
 
 public abstract class Session {
     private final String CAN_NOT_REGISTER_SESSION = "수강신청 모집중이 아닙니다.";
@@ -15,15 +14,15 @@ public abstract class Session {
     private final Students students;
     private SessionStatus sessionStatus;
 
-    public Session(String title, LocalDateTime startDay, LocalDateTime endDay) {
+    public Session(String title, LocalDate startDay, LocalDate endDay) {
         this(0L, title, startDay, endDay, SessionStatus.READY, new Students());
     }
 
-    public Session(String title, LocalDateTime startDay, LocalDateTime endDay, SessionStatus sessionStatus, Students students) {
+    public Session(String title, LocalDate startDay, LocalDate endDay, SessionStatus sessionStatus, Students students) {
         this(0L, title, startDay, endDay, sessionStatus, students);
     }
 
-    public Session(Long id, String title, LocalDateTime startDay, LocalDateTime endDay, SessionStatus sessionStatus, Students students) {
+    public Session(Long id, String title, LocalDate startDay, LocalDate endDay, SessionStatus sessionStatus, Students students) {
         this.id = id;
         this.title = title;
         this.sessionDate = new SessionDate(startDay, endDay);
@@ -51,23 +50,21 @@ public abstract class Session {
         return this.sessionStatus;
     }
 
-    public void register(NsUser student, Optional<Payment> payment) {
+    public void register(NsUser student, Payment payment) {
         if (this.sessionStatus != SessionStatus.OPEN) {
             throw new IllegalArgumentException(CAN_NOT_REGISTER_SESSION);
         }
 
-        if (requiresPayment()) {
-            Payment actualPayment = payment.orElseThrow(() -> new IllegalArgumentException("유료 세션에서는 결제가 필요합니다."));
-            actualPayment.validateForSessionAndUser(id, student.getId(), getFee());
-        }
+        validateRegistration(student, payment);
+        
         students.addStudent(student);
     }
 
+    protected abstract void validateRegistration(NsUser student, Payment payment);
+
     protected abstract boolean requiresPayment();
 
-    protected Long getFee() {
-        return null;
-    }
+    protected abstract Long getFee();
 
     public Long getId() {
         return id;

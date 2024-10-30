@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class SessionImgTest {
+class SessionImageTest {
     @DisplayName("이미지 크기는 1MB 이하여야 한다.")
     @Test
     void 이미지_사이즈_검증() {
         assertThatThrownBy(() -> {
-            new SessionImg(1025, 600, 400, "jpg");
+            new SessionImage(1025, 600, 400, "jpg");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -20,10 +20,10 @@ class SessionImgTest {
     void 이미지_비율_검증() {
         assertAll(
                 () -> assertThatThrownBy(() -> {
-                    new SessionImg(1025, 150, 100, "jpg");
+                    new SessionImage(1025, 150, 100, "jpg");
                 }).isInstanceOf(IllegalArgumentException.class),
                 () -> assertThatThrownBy(() -> {
-                    new SessionImg(1025, 600, 500, "jpg");
+                    new SessionImage(1025, 600, 500, "jpg");
                 }).isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -32,7 +32,7 @@ class SessionImgTest {
     @Test
     void 이미지_타입_검증() {
         assertThatThrownBy(() -> {
-            new SessionImg(1025, 600, 400, "jpgs");
+            new SessionImage(1025, 600, 400, "jpgs");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -40,4 +40,8 @@ public class Payment {
             throw new IllegalArgumentException(INVALID_PAYMENT_INFO);
         }
     }
+
+    public Long getAmount() {
+        return amount;
+    }
 }

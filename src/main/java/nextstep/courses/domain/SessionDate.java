@@ -1,13 +1,13 @@
 package nextstep.courses.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class SessionDate {
     private final String ERROR_START_DAY_MESSAGE = "종료일이 시작일보다 과거일수 없습니다.";
-    private final LocalDateTime sessionStart;
-    private final LocalDateTime sessionEnd;
+    private final LocalDate sessionStart;
+    private final LocalDate sessionEnd;
 
-    public SessionDate(LocalDateTime sessionStart, LocalDateTime sessionEnd) {
+    public SessionDate(LocalDate sessionStart, LocalDate sessionEnd) {
         if (sessionStart.isAfter(sessionEnd)) {
             throw new IllegalArgumentException(ERROR_START_DAY_MESSAGE);
         }
