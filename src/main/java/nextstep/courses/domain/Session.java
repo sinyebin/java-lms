@@ -72,6 +72,38 @@ public abstract class Session {
         return id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public LocalDate getSessionStart() {
+        return sessionDate.getSessionStart();
+    }
+
+    public LocalDate getSessionEnd() {
+        return sessionDate.getSessionEnd();
+    }
+
+    public int getImageSize() {
+        return sessionImage.getImageSize();
+    }
+
+    public int getImageHeight() {
+        return sessionImage.getImageHeight();
+    }
+
+    public int getImageWidth() {
+        return sessionImage.getImageWidth();
+    }
+
+    public String getImageType() {
+        return sessionImage.getImageType();
+    }
+
+    public int getMaxCapacity() {
+        return students.getMaxCapacity();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -25,7 +25,7 @@ public class PaidSession extends Session {
         super(id, title, startDay, endDay, sessionStatus, students, sessionImage);
         this.fee = fee;
     }
-
+    
     @Override
     protected void validateRegistration(NsUser student, Payment payment) {
         payment.validateForSessionAndUser(getId(), student.getId(), getFee());
@@ -37,9 +37,10 @@ public class PaidSession extends Session {
     }
 
     @Override
-    protected Long getFee() {
+    public Long getFee() {
         return fee;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -48,3 +48,35 @@ create table delete_history (
     deleted_by_id bigint,
     primary key (id)
 );
+
+create table session(
+    id bigint auto_increment not null,
+    title varchar(255) not null,
+    session_start timestamp not null,
+    session_end timestamp,
+    image_size bigint,
+    image_width bigint,
+    image_height bigint,
+    image_type varchar(255),
+    session_status varchar(255),
+    course_id bigint not null,
+    primary key (id),
+    constraint fk_course
+            foreign key (course_id) references course(id)
+);
+
+create table  paid_session (
+    id bigint not null,
+    max_capacity bigint,
+    fee bigint,
+    primary key (id),
+    constraint fk_session_paid
+        foreign key (id) references session(id) on delete cascade
+);
+
+create table free_session (
+    id bigint not null,
+     primary key (id),
+        constraint fk_session_free
+            foreign key (id) references session(id) on delete cascade
+);

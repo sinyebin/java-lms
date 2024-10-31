@@ -37,4 +37,20 @@ public class SessionImage {
             throw new IllegalArgumentException(INVALID_ASPECT_RATIO_MESSAGE);
         }
     }
+
+    public int getImageSize() {
+        return imageSize;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public String getImageType() {
+        return imageType.toString();
+    }
 }
