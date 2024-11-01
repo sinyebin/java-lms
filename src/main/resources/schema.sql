@@ -80,3 +80,11 @@ create table free_session (
         constraint fk_session_free
             foreign key (id) references session(id) on delete cascade
 );
+
+create table session_student(
+    session_id bigint not null,
+    student_id bigint not null,
+    primary key (session_id, student_id),
+    foreign key (session_id) references session(id) on delete cascade,
+    foreign key (student_id) references ns_user(id) on delete cascade
+);

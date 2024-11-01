@@ -56,15 +56,12 @@ public abstract class Session {
         if (this.sessionStatus != SessionStatus.OPEN) {
             throw new IllegalArgumentException(CAN_NOT_REGISTER_SESSION);
         }
-
         validateRegistration(student, payment);
 
         students.addStudent(student);
     }
 
     protected abstract void validateRegistration(NsUser student, Payment payment);
-
-    protected abstract boolean requiresPayment();
 
     protected abstract Long getFee();
 

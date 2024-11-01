@@ -28,10 +28,6 @@ public class FreeSession extends Session {
         }
     }
 
-    @Override
-    protected boolean requiresPayment() {
-        return false;
-    }
 
     @Override
     protected Long getFee() {
