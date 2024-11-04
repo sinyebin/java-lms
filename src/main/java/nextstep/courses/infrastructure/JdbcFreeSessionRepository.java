@@ -15,16 +15,18 @@ public class JdbcFreeSessionRepository extends JdbcSessionRepository<FreeSession
     public Long saveBaseSession(FreeSession session, Long courseId) {
         Long sessionId = super.saveBaseSession(session, courseId);
 
-        String paidSessionSql = "INSERT INTO free_session (id) VALUES (?)";
-        jdbcTemplate.update(paidSessionSql, sessionId);
+        String freeSessionSql = "UPDATE session SET  max_capacity =?,  fee=? where id=?";
+        jdbcTemplate.update(freeSessionSql, 0, 0, sessionId);
 
         return sessionId;
     }
 
     @Override
     public FreeSession findById(Long id) {
-        String sql = "SELECT s.id, s.title, s.session_start, s.session_end, s.image_size, s.image_width, s.image_height, s.image_type, s.session_status, s.course_id " +
-                "FROM session s WHERE s.id = ?";
+        String sql =
+                "SELECT s.id, s.title, s.session_start, s.session_end, s.image_size, s.image_width, s.image_height, s.image_type, s.session_status, s.course_id "
+                        +
+                        "FROM session s WHERE s.id = ?";
         RowMapper<FreeSession> rowMapper = (rs, rowNum) -> new FreeSession(
                 rs.getLong("id"),
                 rs.getString("title"),

@@ -60,25 +60,11 @@ create table session(
     image_type varchar(255),
     session_status varchar(255),
     course_id bigint not null,
-    primary key (id),
-    constraint fk_course
-            foreign key (course_id) references course(id)
-);
-
-create table  paid_session (
-    id bigint not null,
     max_capacity bigint,
     fee bigint,
     primary key (id),
-    constraint fk_session_paid
-        foreign key (id) references session(id) on delete cascade
-);
-
-create table free_session (
-    id bigint not null,
-     primary key (id),
-        constraint fk_session_free
-            foreign key (id) references session(id) on delete cascade
+    constraint fk_course
+            foreign key (course_id) references course(id)
 );
 
 create table session_student(

@@ -16,8 +16,8 @@ public class JdbcPaidSessionRepository extends JdbcSessionRepository<PaidSession
     public Long saveBaseSession(PaidSession session, Long courseId) {
         Long sessionId = super.saveBaseSession(session, courseId);
         
-        String paidSessionSql = "INSERT INTO paid_session (id, max_capacity, fee) VALUES (?, ?, ?)";
-        jdbcTemplate.update(paidSessionSql, sessionId, session.getMaxCapacity(), session.getFee());
+        String paidSessionSql = "UPDATE session SET  max_capacity =?,  fee=? where id=?";
+        jdbcTemplate.update(paidSessionSql, session.getMaxCapacity(), session.getFee(), sessionId);
 
         return sessionId;
     }
@@ -25,7 +25,7 @@ public class JdbcPaidSessionRepository extends JdbcSessionRepository<PaidSession
     @Override
     public PaidSession findById(Long id) {
         String sql = "SELECT s.id, s.title, s.session_start, s.session_end, s.image_size, s.image_width, s.image_height, s.image_type, s.session_status, s.course_id, " +
-                "p.max_capacity, p.fee FROM session s JOIN paid_session p ON s.id = p.id WHERE s.id = ?";
+                "s.max_capacity, s.fee FROM session s WHERE s.id=?";
         RowMapper<PaidSession> rowMapper = (rs, rowNum) -> new PaidSession(
                 rs.getLong("id"),
                 rs.getString("title"),
